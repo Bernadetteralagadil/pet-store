@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="product.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
+    <title>Product Categories</title>
+</head>
+<body>
+    <!-- Placeholder for Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search...">
+        </div>
+
+        <!-- Categories Section -->
+        <h1 class="categories-title">CATEGORIES</h1>
+        <div class="categories" id="categories">
+            <div class="category" data-category="Dog">
+                <img src="src/Dog.jpg" alt="Dogs">
+                <p>DOGS</p>
+            </div>
+            <div class="category" data-category="Cat">
+                <img src="src/Cat.jpg" alt="Cats">
+                <p>CATS</p>
+            </div>
+        </div>
+
+        <!-- Subcategories -->
+        <div class="subcategory-container" id="subcategory-container">
+            <!-- Subcategories will load dynamically here -->
+        </div>
+    </div>
+
+    <!-- Placeholder for Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Data structure to hold products
+        const productData = {
+            Dog: {
+                Food: [
+                    { name: "Bare Kitchen Fresh Lamb Recipe", price: "₱99.00", image:  "src/Product2.png" },
+                    { name: "Harley's Dehydrated Beef Skewer", price: "₱199.00", image: "src/assets/Harley's_Dehydrated_Beef_Skewer.jpg" }
+                ],
+                Toys: [
+                    { name: "Chew Toy", price: "₱99.00", image: "src/assets/Toy1.png" },
+                    { name: "Interactive Ball", price: "₱120.00", image: "src/assets/Toy2.png" }
+                ]
+            },
+            Cat: {
+                Food: [
+                    { name: "Cat Food Deluxe", price: "₱150.00", image: "src/download.j" },
+                    { name: "Whiskas Tuna", price: "₱120.00", image: "src/assets/CatFoo.png" }
+                ]
+            }
+        };
+
+        // Dynamically render products based on category
+        function renderProducts(category) {
+            const subcategoryContainer = document.getElementById("subcategory-container");
+            subcategoryContainer.innerHTML = "";
+
+            const subcategories = productData[category] || {};
+            for (const [subcategory, products] of Object.entries(subcategories)) {
+                const subcategoryTitle = document.createElement("h2");
+                subcategoryTitle.textContent = subcategory;
+
+                const productGrid = document.createElement("div");
+                productGrid.classList.add("product-grid");
+
+                products.forEach(product => {
+                    const productItem = document.createElement("div");
+                    productItem.classList.add("product-item");
+
+                    productItem.innerHTML = `
+                        <img src="${product.image}" alt="${product.name}">
+                        <div class="product-details">
+                            <h3>${product.name}</h3>
+                            <p>${product.price}</p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    `;
+
+                    productGrid.appendChild(productItem);
+                });
+
+                subcategoryContainer.appendChild(subcategoryTitle);
+                subcategoryContainer.appendChild(productGrid);
+            }
+        }
+
+        // Attach event listeners to categories
+        document.querySelectorAll(".category").forEach(categoryElement => {
+            categoryElement.addEventListener("click", () => {
+                const category = categoryElement.dataset.category;
+                renderProducts(category);
+            });
+        });
+        // Load header content
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            });
+
+        // Load footer content
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background-color: #FAF8F4;
+}
+
+/* Header */
+.header-title {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+
+/* Logo Container */
+.logo-container-fp {
+    display: flex;
+    align-items: center;
+    margin-left: 2rem;
+}
+
+.logo {
+    height: 65px;
+    width: 90px;
+}
+
+.logo-text {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #45280f;
+    font-family: Poppins, sans-serif;
+}
+
+/* Cart and User Icon Styling */
+.admin {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-right: 2rem;
+}
+
+.admin button {
+    background: none;
+    color: #45280f;
+    cursor: pointer;
+    font-size: 1.1rem;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    transition: transform 0.2s ease;
+}
+
+.admin button:hover {
+    transform: scale(1.2);
+    color: #839f65;
+}
+
+.admin {
+    display: flex;
+    align-items: center; /* Ensures vertical alignment */
+    gap: 15px; /* Space between icons */
+    margin-right: 2rem;
+}
+
+.icon-notification,
+.icon-user {
+    display: inline-flex; /* Ensures proper alignment */
+    text-align: center;
+}
+
+/* Greeting Section */
+.greetings {
+    color: #45280f; /* Matches the color scheme */
+    justify-content: center;
+    display: flex;
+    text-align: center;
+    margin-right: 2rem;
+    font-family: Poppins, sans-serif;
+}
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 85px; /* Place the sidebar below the fixed header */
+    left: 0; /* Sidebar fixed to the right */
+    width: 210px;
+    height: calc(100vh - 70px); /* Full height minus header height */
+    background: linear-gradient(to bottom, white,white,white, #A3CA79);
+    border-left: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 999; /* Ensure it stays above content */
+}
+
+.sidebar h2 {
+    font-size: 1.2rem;
+    color: #5C3D1D;
+    margin: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    margin: 20px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #5C3D1D;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.menu a i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.menu a:hover {
+    font-weight: bold;
+    color: #839f65;
+}
+
+.logout {
+    text-align: center;
+    margin-bottom: 80px;
+    margin-right: 45px;
+}
+
+.logout a {
+    text-decoration: none;
+    color: #5C3D1D;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.logout a i {
+    margin-right: 8px;
+}
+
+/* Main Content */
+.main-content {
+    margin-right: 250px; /* Creates space for the sidebar */
+    margin-top: 100px; /* Creates space for the fixed header */
+    padding: 20px;
+    flex-grow: 1;
+    background-color: #FAF8F4;
+    height: calc(100vh - 70px);
+    overflow-y: auto; /* Scrollable content if it exceeds the page */
+}

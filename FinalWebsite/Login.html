@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="main.css">
+  <title>Login Page</title>
+  <style>
+    .error {
+      border-color: red;
+    }
+    .error-message {
+      color: red;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Parent Container -->
+<div class="main-container">
+  <!-- Login Section -->
+  <div id="loginSection" style="display: block;">
+    <div class="section-content">
+      <h2>LOGIN ACCOUNT</h2>
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <label>Email:</label>
+        <input type="email" id="loginEmail" placeholder="Enter your email" />
+        <span id="loginEmailError" class="error-message"></span>
+
+        <label>Password:</label>
+        <input type="password" id="loginPassword" placeholder="Enter your password" />
+        <span id="loginPasswordError" class="error-message"></span>
+
+        <button type="submit">Login</button>
+      </form>
+      <p>
+        Don't have an Account? <a href="#" onclick="event.preventDefault(); closeLoginSection(); openCreateAccountSection();">Create Account</a>
+      </p>
+      <button class="close-button" onclick="closeLoginSection()">&times;</button>
+    </div>
+  </div>
+
+  <!-- Create Account Section -->
+  <div id="createAccountSection" style="display: none;">
+    <div class="section-content">
+      <h2>CREATE NEW ACCOUNT</h2>
+      <form id="createAccountForm" onsubmit="handleCreateAccount(event)">
+        <label>First Name:</label>
+        <input type="text" id="firstName" placeholder="Enter your first name" />
+        <span id="firstNameError" class="error-message"></span>
+
+        <label>Last Name:</label>
+        <input type="text" id="lastName" placeholder="Enter your last name" />
+        <span id="lastNameError" class="error-message"></span>
+
+        <label>Gender:</label>
+        <select id="gender">
+          <option value="">Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+        <span id="genderError" class="error-message"></span>
+
+        <label>Birth Date:</label>
+        <input type="date" id="birthDate" />
+        <span id="birthDateError" class="error-message"></span>
+
+        <label>Email:</label>
+        <input type="email" id="createEmail" placeholder="Enter your email" />
+        <span id="createEmailError" class="error-message"></span>
+
+        <label>Password:</label>
+        <input type="password" id="createPassword" placeholder="Enter your password" />
+
+        <button type="submit">Create Account</button>
+      </form>
+      <p>
+        Already have an account? <a href="#" onclick="event.preventDefault(); closeCreateAccountSection(); openLoginSection();">Login</a>
+      </p>
+      <button class="close-button" onclick="closeCreateAccountSection()">&times;</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Handle Account Creation
+function handleCreateAccount(event) {
+  event.preventDefault();
+
+  console.log('Form Submitted!'); // Add this to confirm the form is being submitted
+
+  const firstName = document.getElementById('firstName').value;
+  const lastName = document.getElementById('lastName').value;
+  const gender = document.getElementById('gender').value;
+  const birthDate = document.getElementById('birthDate').value;
+  const email = document.getElementById('createEmail').value;
+  const password = document.getElementById('createPassword').value;
+
+  // Perform validation (optional)
+  
+  if (firstName && lastName && gender && birthDate && email && password) {
+    const accountData = {
+      firstName: firstName,
+      lastName: lastName,
+      gender: gender,
+      birthDate: birthDate,
+      email: email,
+      password: password
+    };
+
+    // Send data to the API
+    fetch('http://localhost:8000/createAccount.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(accountData)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert('Account created successfully!');
+          closeCreateAccountSection();
+          openLoginSection();
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  } else {
+    alert('Please fill out all fields.');
+  }
+}
+
+// Handle Login
+// Handle Login
+function handleLogin(event) {
+  event.preventDefault();
+
+  const loginEmail = document.getElementById('loginEmail').value;
+  const loginPassword = document.getElementById('loginPassword').value;
+
+  
+  if (loginEmail === "admin@gmail.com" && loginPassword === "admin") {
+    // Redirect to the admin dashboard
+    window.location.href = 'adminDash.html';
+  } else if (loginEmail && loginPassword) {
+    const loginData = {
+      email: loginEmail,
+      password: loginPassword
+    };
+    fetch('http://localhost:8000/login.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(loginData)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+         
+          // Redirect to the front page with accountID as a query parameter
+          window.location.href = `frontPage.html?accountID=${data.accountID}`;
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  } else {
+    alert('Please fill out both email and password.');
+  }
+}
+
+// Toggle sections
+function openLoginSection() {
+  document.getElementById('loginSection').style.display = 'block';
+  document.getElementById('createAccountSection').style.display = 'none';
+}
+
+function closeLoginSection() {
+  document.getElementById('loginSection').style.display = 'none';
+}
+
+function openCreateAccountSection() {
+  document.getElementById('createAccountSection').style.display = 'block';
+  document.getElementById('loginSection').style.display = 'none';
+}
+
+function closeCreateAccountSection() {
+  document.getElementById('createAccountSection').style.display = 'none';
+}
+
+</script>
+
+</body>
+</html>

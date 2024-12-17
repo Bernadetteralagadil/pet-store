@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="productView.css">
+    <title>Product Page</title>
+</head>
+<body>
+    <!-- Header -->
+    <!-- Placeholder for Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Product Image -->
+        <div class="product-image">
+            <img src="image.png" alt="Bare Kitchen Fresh Lamb Recipe Dog Food">
+        </div>
+
+        <!-- Product Details -->
+        <div class="product-details">
+            <h1>Bare Kitchen Fresh Lamb Recipe Wet Dog Food 430g</h1>
+            <p class="price">₱ 199.00</p>
+            <p class="stock">Stock: 10</p>
+            
+            <div class="quantity">
+                <label for="quantity">Quantity:</label>
+                <button onclick="decrease()">-</button>
+                <input id="quantity" type="text" value="1" readonly>
+                <button onclick="increase()">+</button>
+            </div>
+
+            <div class="buttons">
+                <button class="add-to-cart">Add to Cart</button>
+                <button class="buy-now">Buy Now</button>
+            </div>
+
+            <div class="description">
+                <p>
+                    Better Digestion and Poopies - Cornstarch in Luscious Wet Food Chunks and Paste serves as a 
+                    binding agent, helping to maintain the shape and texture of the treats. It aids in the formation 
+                    of bites while also contributing to their chewy consistency.
+                </p>
+                <p>
+                    Improve Heart Health and Vitality - Taurine and Lysine are vital for your pet's heart health. 
+                    Taurine regulates heart rhythm, supports heart muscle function, and prevents heart disease like 
+                    dilated cardiomyopathy.
+                </p>
+                <p>
+                    Packed with Vitamins and Nutrients - Vitamins A, D3, K3, B1, B2, B6, D-Calcium, Pantothenate, 
+                    and Biotin promote overall health and well-being.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recommended Products -->
+    <div class="recommended">
+        <h2>Recommended Products</h2>
+        <div class="recommended-products">
+            <div class="recommended-item">
+                <img src="image.png" alt="Product 1">
+                <p>Bare Kitchen Chicken Recipe</p>
+                <p class="price">₱ 189.00</p>
+            </div>
+            <div class="recommended-item">
+                <img src="image.png" alt="Product 2">
+                <p>Bare Kitchen Beef Recipe</p>
+                <p class="price">₱ 199.00</p>
+            </div>
+            <div class="recommended-item">
+                <img src="image.png" alt="Product 3">
+                <p>Bare Kitchen Salmon Recipe</p>
+                <p class="price">₱ 209.00</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Quantity Adjust Script -->
+    <script>
+        function increase() {
+            let quantityInput = document.getElementById('quantity');
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+        }
+
+        function decrease() {
+            let quantityInput = document.getElementById('quantity');
+            if (parseInt(quantityInput.value) > 1) {
+                quantityInput.value = parseInt(quantityInput.value) - 1;
+            }
+        }
+
+        // Load header content
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            });
+
+        // Load footer content
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+</body>
+</html>

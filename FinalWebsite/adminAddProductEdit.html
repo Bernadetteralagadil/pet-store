@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="adminAddProduct.css">
+    <title>Product Form</title>
+</head>
+<body>
+    <!-- Header and Sidebar Placeholder -->
+    <div id="adminHdrft-placeholder"></div>
+
+    <div class="container">
+        <!-- Image Upload -->
+        <label for="product_image" class="required">CLICK IT TO UPLOAD IMAGE</label>
+        <div class="image-container">
+            <img id="imagePreview" alt="Uploaded Image" style="display:none;">
+            <input type="file" id="product_image" accept="image/*" onchange="previewImage(event)">
+        </div>
+
+        <!-- Product Form -->
+        <label for="product_id" class="required">PRODUCT ID</label>
+        <input type="text" id="product_id" readonly>
+
+        <label for="product_name" class="required">PRODUCT NAME</label>
+        <input type="text" id="product_name">
+
+        <label for="product_category_1" class="required">PRODUCT CATEGORY</label>
+        <div class="small-input">
+            <input type="text" id="product_category_1" placeholder="Category">
+        </div>
+        <div class="small-input">
+            <input type="text" id="product_category_2" placeholder="Sub-Category">
+        </div>
+
+        <label for="product_description" class="required">PRODUCT DESCRIPTION</label>
+        <textarea id="product_description" rows="4"></textarea>
+
+        <label for="price" class="required">PRICE</label>
+        <div class="small-input">
+            <input type="number" id="price" placeholder="Price">
+        </div>
+
+        <label for="stock" class="required">STOCK</label>
+        <div class="small-input">
+            <input type="number" id="stock" placeholder="Stock Quantity">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" onclick="updateProduct()">UPDATE</button>
+    </div>
+
+    <script>
+        // Dynamically load headerSidebar.html
+        fetch('adminHdrft.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('adminHdrft-placeholder').innerHTML = data)
+            .catch(error => console.error('Error loading header and sidebar:', error));
+
+        // Preview uploaded image
+        function previewImage(event) {
+            const imagePreview = document.getElementById('imagePreview');
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Extract productID from query string
+        const urlParams = new URLSearchParams(window.location.search);
+        const productID = urlParams.get('productID');
+
+        if (productID) {
+            fetch(`http://localhost:8000/fetchProductDetails.php?productID=${productID}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.product) {
+                        document.getElementById('product_id').value = data.product.productID;
+                        document.getElementById('product_name').value = data.product.name;
+                        document.getElementById('product_category_1').value = data.product.categories;
+                        document.getElementById('product_category_2').value = data.product.sub_categories;
+                        document.getElementById('product_description').value = data.product.description;
+                        document.getElementById('price').value = data.product.price;
+                        document.getElementById('stock').value = data.product.stock;
+                        if (data.product.thumbnail) {
+                            document.getElementById('imagePreview').src = `data:image/jpeg;base64,${data.product.thumbnail}`;
+                            document.getElementById('imagePreview').style.display = 'block';
+                        }
+                    }
+                })
+                .catch(error => console.error('Error fetching product details:', error));
+        }
+
+        // Update Product Function
+        function updateProduct() {
+            const productID = document.getElementById('product_id').value;
+            const name = document.getElementById('product_name').value;
+            const categories = document.getElementById('product_category_1').value;
+            const subCategories = document.getElementById('product_category_2').value;
+            const description = document.getElementById('product_description').value;
+            const price = document.getElementById('price').value;
+            const stock = document.getElementById('stock').value;
+
+            const productData = {
+                productID,
+                name,
+                categories,
+                sub_categories: subCategories,
+                description,
+                price: parseFloat(price),
+                stock: parseInt(stock)
+            };
+
+            fetch('http://localhost:8000/update_product.php', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(productData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Product updated successfully!');
+                } else {
+                    alert('Failed to update product: ' + data.message);
+                }
+            })
+            .catch(error => console.error('Error updating product:', error));
+        }
+    </script>
+</body>
+</html>

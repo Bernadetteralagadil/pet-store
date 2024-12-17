@@ -1,0 +1,403 @@
+.header-title {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0;
+    font-family: Poppins, sans-serif;
+    font-weight: bold;
+}
+
+
+/* Make sure the header stays on top and is always fixed */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999; /* Ensure header is above all content */
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for header */
+  padding: 20px 0; /* Adjust padding as needed */
+}
+
+/* Add a space below the header for the content */
+body {
+  margin-top: 100px; /* Adjust based on the height of your header */
+}
+
+.frontpage {
+    padding-top: 70px;
+}
+
+/* Logo Container */
+.logo-container-fp {
+    display: flex;
+    align-items: center;
+    margin-left: 2rem;
+}
+
+.logo {
+    height: 65px;
+    width: 90px;
+}
+
+.divider-line-fp {
+    width: 4px;
+    height: 45px;
+    background-color: #45280f;
+    margin: 0px 5px;
+    margin-right: 15px;
+}
+
+.logo-text {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #45280f;
+    font-family: Poppins, sans-serif;
+}
+
+/* Navbar Links */
+.navbar a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #45280f;
+    padding: 10px 15px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    font-family: Poppins, sans-serif;
+}
+
+.navbar a:hover {
+    transform: scale(1.1);
+    color: #839f65;
+    font-size: 18px;
+    text-decoration: underline;
+}
+
+/* Cart and User Icon Styling */
+.cart-user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-right: 2rem;
+}
+
+.cart-user button {
+    background: none;
+    color: #45280f;
+    cursor: pointer;
+    font-size: 1.1rem;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    transition: transform 0.2s ease;
+}
+
+.cart-user button:hover {
+    transform: scale(1.2);
+    color: #839f65;
+}
+
+.cart-user {
+    display: flex;
+    align-items: center; /* Ensures vertical alignment */
+    gap: 15px; /* Space between icons */
+    margin-right: 2rem;
+}
+
+.icon-cart,
+.icon-user {
+    display: inline-flex; /* Ensures proper alignment */
+    text-align: center;
+}
+
+/* Greeting Section */
+.greetings {
+    color: #45280f; /* Matches the color scheme */
+    justify-content: center;
+    display: flex;
+    text-align: center;
+    margin-right: 2rem;
+    font-family: Poppins, sans-serif;
+}
+/* footer Section */
+  .footer {
+    background: linear-gradient(to bottom, white, #A3CA79);
+    padding: 20px 30px;
+    font-family: Poppins, sans-serif;
+    color: #45280f;
+    text-align: center;
+    height: 280px;
+    margin: 0;
+}
+
+.footer h2{
+    font-family: Poppins, sans-serif;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    text-align: center;
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.about-section,
+.follow-us,
+.store-service {
+    text-align: center;
+    font-family: Poppins, sans-serif;
+}
+
+.about-section h3,
+.follow-us h3,
+.store-service h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.about-section p,
+.store-service p {
+    font-size: 0.9rem;
+    margin: 5px 0;
+}
+
+.about-section a {
+    color: #45280f;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.follow-us ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.follow-us button {
+    color: #45280f;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.follow-us button:hover {
+    color: #b7d3a8;
+}
+
+.store-service p span {
+    font-weight: bold;
+}
+
+.message {
+    text-align: center;
+    color: #45280f;
+    font-size: 1rem;
+    margin: 20px auto; /* Balanced spacing above and below */
+    font-style: italic;
+    padding: 15px 0; /* Adds consistent spacing */
+}
+/* General section styling to remove gap between containers */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Parent Container */
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Make sure it covers the entire viewport height */
+    background-color: #f0f0f0; /* Optional: add a background color */
+  }
+  
+  /* Section Content */
+  .section-content {
+    background: linear-gradient(to bottom, white, white, white, white, #A3CA79);
+    border-radius: 10px;
+    padding: 15px;
+    width: 400px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+    font-family: 'Poppins', sans-serif; /* Poppins font for all sections */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .section-content p {
+    text-align: center; /* Center the text */
+    font-size: 14px; /* Set a reasonable font size */
+    color: #45280f; /* Match the text color with the section theme */
+    margin-top: 20px; /* Add some space from the form elements */
+    font-family: Poppins, sans-serif;
+  }
+  
+  /* Style for the "Create Account" link */
+  .section-content p a {
+    color:  #45280f; /* Green color for the link */
+    text-decoration: none; /* Remove underline */
+    font-weight: bold; /* Make the link text bold */
+    transition: color 0.3s ease; /* Add a smooth transition effect */
+    font-family: Poppins, sans-serif;
+  }
+  
+  /* Hover effect for the "Create Account" link */
+  .section-content p a:hover {
+    text-decoration: underline; /* Add underline on hover */
+  }
+  
+  /* Section Header */
+  .section-content h2 {
+    font-size: 1.5rem;
+    color: #45280f;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-family: Poppins, sans-serif;
+  }
+  
+  /* Labels */
+  .section-content form label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    color: #45280f;
+    font-weight: bold;
+    margin-top: 5px;
+    font-size: 13px;
+  }
+  
+  /* Inputs */
+  .section-content form input {
+    width: 100%; /* Make the input take full width */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 12px;
+    background-color: white;
+    color: #333;
+    margin-top: 5px;
+    box-sizing: border-box; /* Ensure padding doesn't overflow the container */
+  }
+  
+  /* Buttons */
+  .section-content form button {
+    width: 50%; /* Center the button */
+    padding: 8px;
+    background: white;
+    border: 1px solid #9b9793;
+    color: #45280f;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 15px auto 0; /* Center the button */
+    display: block; /* Ensure the button is a block-level element */
+  }
+  
+  .section-content form button:hover {
+    background-color: #adabaa;
+  }
+  
+  /* Close Button */
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #45280f;
+    cursor: pointer;
+  }
+  
+  .close-button:hover {
+    color: #adabaa;
+  }
+  
+  /* Forgot Password Link */
+  .forgot-password a {
+    color: #45280f;
+    text-decoration: none;
+    font-size: 12px;
+    display: inline-block;
+    margin-top: 5px;
+    font-family: Poppins, sans-serif;
+  }
+  
+  .forgot-password a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Row and Column for Create Account Section */
+  .row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .column {
+    flex: 1;
+    padding: 5px;
+  }
+  
+      /* Modal Styling */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+      }
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+      }
+      .modal h2 {
+        margin-bottom: 20px;
+        font-family: Poppins, sans-serif;
+      }
+      .modal button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+      }

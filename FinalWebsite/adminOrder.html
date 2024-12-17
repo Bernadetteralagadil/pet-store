@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="adminOrder.css">
+  <title>Order Table</title>
+</head>
+<body>
+  <!-- Header and Sidebar Placeholder -->
+  <div id="adminHdrft-placeholder"></div>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>PRODUCT INVENTORY TABLE</h1>
+  </div>
+  <div class="tab">
+    <div class="tab active" onclick="window.location.href='adminOrder.html'">ORDER</div>
+    <div class="tab" onclick="window.location.href='adminProduct.html'">PRODUCTS</div>
+  </div>
+
+  <div class="container">
+    <!-- Search -->
+    <div class="search-filter">
+      <input type="search" id="searchInput" placeholder="Search">
+    </div>
+
+    <!-- Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>ORDER NO</th>
+          <th>ORDER BY</th>
+          <th>DESCRIPTION</th>
+          <th>PRICE</th>
+          <th>QUANTITY</th>
+          <th>TOTAL</th>
+          <th>STATUS</th>
+          <th>ACTION</th>
+        </tr>
+      </thead>
+      <tbody id="orderTableBody">
+        <!-- Orders will be dynamically inserted here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Dynamically load headerSidebar.html into the placeholder
+    fetch('adminHdrft.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('adminHdrft-placeholder').innerHTML = data;
+      })
+      .catch(error => console.error('Error loading header and sidebar:', error));
+
+    // Fetch all orders from the PHP backend
+    fetch('http://localhost:8000/fetchOrders.php')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const orders = data.orders;
+          const tableBody = document.getElementById('orderTableBody');
+          tableBody.innerHTML = ''; // Clear the table body
+
+          orders.forEach(order => {
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${order.orderID}</td>
+    <td>${order.firstName} ${order.lastName}</td>
+    <td>${order.description}</td>
+    <td>${order.price}</td>
+    <td>${order.quantity}</td>
+    <td>${order.totalPrice}</td>
+    <td><div class="status-${order.status.toLowerCase()}">${order.status}</div></td>
+    <td>
+      <button class="view-btn" onclick="window.location.href='adminOrderView.html?orderID=${order.orderID}&status=${order.status}'">View</button>
+    </td>
+  `;
+  tableBody.appendChild(row);
+});
+
+        } else {
+          console.error('Failed to load orders:', data.message);
+        }
+      })
+      .catch(error => console.error('Error fetching orders:', error));
+  </script>
+</body>
+</html>

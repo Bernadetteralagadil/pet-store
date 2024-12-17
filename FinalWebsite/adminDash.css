@@ -1,0 +1,84 @@
+
+/* General Styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #faf4e8;
+    color: #333;
+}
+/* Header and Sidebar Placeholder */
+#adminHdrft-placeholder {
+    width: 100%;
+    height: 60px;
+    background-color: #ddd;
+    margin-bottom: 20px;
+}
+/* Card Container */
+.cards {
+    display: flex;
+    justify-content: center; /* Centers the cards horizontally */
+    flex-wrap: wrap; /* Allows the cards to wrap into multiple rows */
+    gap: 20px; /* Adds gaps between the cards */
+    margin: 20px auto;
+    max-width: 1200px;
+    margin-left: 20rem;
+}
+
+.card {
+    width: 250px;
+    height: 120px; /* Adjust height to keep cards uniform */
+    background: linear-gradient(to bottom, white,white,white,white, #A3CA79);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: space-between; /* Evenly spaces content vertically */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition on hover */
+}
+
+/* Hover Effect */
+.card:hover {
+    transform: scale(1.05); /* Slightly enlarge the card */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+}
+
+/* Text Styles */
+.card p {
+    margin: 5px 0;
+    color: #777;
+    font-size: 14px;
+    flex-grow: 1; /* Allow paragraph to grow and push other content */
+}
+
+.card span {
+    font-size: 28px;
+    color: #333;
+    display: block;
+    margin-top: 10px;
+}
+
+/* Chart Container */
+.chart-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+    max-width: 1065px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-left: 20rem;
+}
+
+.chart {
+    width: 100%;
+    height: 300px;
+}
+.chart-container {
+    width: 80%;  /* Adjust the width as needed */
+    height: 400px;  /* Set a fixed height for the chart */
+}

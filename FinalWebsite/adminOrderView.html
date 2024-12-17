@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="adminOrderView.css">
+    <title>Order Details</title>
+</head>
+<body>
+    <!-- Header and Sidebar Placeholder -->
+    <div id="adminHdrft-placeholder"></div>
+
+    <div class="order-card">
+        <!-- Order Header -->
+        <div class="order-header">ORDER #<span id="orderID">0001</span> DETAILS</div>
+        
+        <div class="details">
+            <!-- Order Status -->
+            <div>
+                <label for="statusDropdown" class="label">ORDER STATUS</label>
+                <select class="status-dropdown" id="statusDropdown" aria-label="Order status">
+                    <option value="delivered">DELIVERED</option>
+                    <option value="processing">PROCESSING</option>
+                    <option value="shipped">SHIPPED</option>
+                    <option value="cancelled">CANCELLED</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Save Button -->
+        <button class="save-button" onclick="saveOrderStatus()">SAVE</button>
+    </div>
+
+    <script>
+        // Function to get URL parameters
+        function getURLParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Extract orderID and status from the URL
+        const orderID = getURLParameter('orderID');
+        const status = getURLParameter('status');
+
+        // Update the order details on the page
+        document.getElementById('orderID').textContent = orderID;
+
+        // Set the order status in the dropdown
+        const statusDropdown = document.getElementById('statusDropdown');
+        statusDropdown.value = status; // Set the initial value of the dropdown to the current status
+
+        // Function to handle saving the new order status
+        function saveOrderStatus() {
+            const newStatus = statusDropdown.value;
+            console.log('Saving order status:', newStatus);
+
+            // Prepare data to send in the request
+            const data = {
+                orderID: orderID,
+                status: newStatus,
+            };
+
+            // If the status is "DELIVERED," add the current date and time
+            if (newStatus === 'delivered') {
+                const dateNow = new Date();
+                const formattedDate = dateNow.toISOString(); // Format the date to ISO 8601 format
+                data.deliveryDateTime = formattedDate; // Add date-time to the data
+            }
+
+            // Send a POST request to update the order status
+            fetch('http://localhost:8000/updateOrderStatus.php', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Order status updated successfully');
+                    // Redirect to the adminOrder interface
+                    window.location.href = 'adminOrder.html';  // Modify the target page as per your requirements
+                } else {
+                    alert('Failed to update order status');
+                }
+            })
+            .catch(error => {
+                console.error('Error updating status:', error);
+                alert('An error occurred while updating the status');
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+/* Apply Poppins font globally */
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #FDF8F2;
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #EAF7DA;
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    vertical-align: middle; /* Align content vertically in the center */
+}
+
+th {
+    background-color: #7DA453;
+    color: white;
+}
+
+td img {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    display: block; /* Makes image a block element */
+    margin: 0 auto; /* Center the image horizontally */
+}
+
+.product-info {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    justify-content: center; /* Align items horizontally in the center */
+    text-align: left;
+}
+
+.product-info img {
+    margin-right: 10px; /* Space between image and text */
+}
+
+.product-name {
+    font-size: 14px;
+}
+
+.price {
+    color: #FF4747;
+    font-weight: bold;
+}
+
+.quantity input {
+    width: 50px;
+    text-align: center;
+}
+
+.total-price {
+    color: #FF4747;
+    font-weight: bold;
+}
+
+.delete-icon {
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* Checkout Button */
+.checkout-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+}
+
+.checkout-btn {
+    background-color: #7DA453;
+    color: white;
+    padding: 10px 10px;
+    margin-left: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.checkout-btn:hover {
+    background-color: #6A924A;
+}
+
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+    padding-top: 0; /* Remove padding at the top */
+}
+
+.modal-content {
+    background: linear-gradient(to bottom, white, white, white, white, #A3CA79); /* Apply the gradient */
+    position: relative; /* Allow centering inside modal */
+    margin: 0; /* Remove margin for centering */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%; /* Adjust width to fit better on screen */
+    max-width: 800px; /* Max width to avoid the modal becoming too wide */
+    top: 50%; /* Center modal vertically */
+    left: 50%; /* Center modal horizontally */
+    transform: translate(-50%, -50%); /* Perfectly center the modal */
+    border-radius: 8px; /* Optional: Add rounded corners */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center content */
+    align-items: center; /* Horizontally center content */
+    text-align: center; /* Center text inside */
+}
+
+.modal-header, .modal-footer {
+    padding: 10px;
+    width: 100%; /* Ensure header/footer spans the full width of the modal */
+}
+
+.modal-body {
+    padding: 20px;
+    width: 100%; /* Ensures body spans the full width of the modal */
+}
+
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top: 10px; /* Add space between content and button */
+}
+
+.btn:hover {
+    background-color: #45a049;
+}

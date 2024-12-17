@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cart.css">
+    <title>Shopping Cart</title>
+    <style>
+        /* Style for the quantity input */
+        .quantity-input {
+            -moz-appearance: textfield; /* Remove the default spinner in Firefox */
+            appearance: textfield; /* Remove the default spinner in other browsers */
+            width: 60px;
+            padding: 5px;
+            text-align: center;
+        }
+
+        /* Hide the up and down arrows (optional) */
+        .quantity-input::-webkit-outer-spin-button,
+        .quantity-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Style the increase/decrease buttons (optional) */
+        .quantity-controls {
+            display: flex;
+            justify-content: space-between;
+            width: 60px;
+        }
+
+        .quantity-controls button {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        /* Style for the checkout modal */
+        #checkout-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #checkout-modal > div {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            text-align: center;
+        }
+
+        /* Style for the confirmation modal */
+        #confirmation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #confirmation-modal > div {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Placeholder for Header -->
+    <div id="header-placeholder"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ITEMS</th>
+                <th>DESCRIPTION</th>
+                <th>PRICE</th>
+                <th>QUANTITY</th>
+                <th>TOTAL PRICE</th>
+                <th>ACTION</th>
+            </tr>
+        </thead>
+        <tbody id="cart-body">
+            <!-- Cart Items Will Be Fetched Dynamically -->
+        </tbody>
+    </table>
+
+    <div class="checkout-container">
+        <p>Total Item/s: <strong id="total-items">0</strong> &nbsp;&nbsp;&nbsp; Subtotal: <span class="price" id="subtotal">₱0.00</span></p>
+        <button class="checkout-btn btn">Checkout</button>
+    </div>
+
+   <!-- Checkout Modal -->
+   <div id="checkout-modal">
+    <div>
+        <h2>Checkout</h2>
+        <div id="checkout-details"></div>
+        <p><strong>TOTAL AMOUNT:</strong> <span id="checkout-total">₱0.00</span></p>
+        <button id="place-order">Place Order</button>
+        <button id="cancel-checkout">Cancel</button>
+    </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div id="confirmation-modal">
+    <div>
+        <h2>Order Confirmation</h2>
+        <p>Your order has been placed successfully!</p>
+        <button id="close-confirmation">Close</button>
+    </div>
+</div>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        const cartBody = document.getElementById("cart-body");
+        const subtotalElement = document.getElementById("subtotal");
+        const totalItemsElement = document.getElementById("total-items");
+
+         // Checkout modal elements
+         const checkoutModal = document.getElementById("checkout-modal");
+        const checkoutDetails = document.getElementById("checkout-details");
+        const checkoutTotal = document.getElementById("checkout-total");
+        const placeOrderButton = document.getElementById("place-order");
+        const cancelCheckoutButton = document.getElementById("cancel-checkout");
+
+        // Confirmation modal
+        const confirmationModal = document.getElementById("confirmation-modal");
+        const closeConfirmationButton = document.getElementById("close-confirmation");
+
+        // Checkout button logic
+        document.querySelector(".checkout-btn").addEventListener("click", () => {
+            let orderDetailsHtml = "<ul>";
+            let subtotal = 0;
+
+            cartBody.querySelectorAll("tr").forEach(row => {
+                const description = row.querySelector(".description").textContent;
+                const quantity = row.querySelector(".quantity-input").value;
+                const price = parseFloat(row.querySelector(".price").textContent.replace('₱', ''));
+                const totalPrice = row.querySelector(".total-price").textContent;
+
+                orderDetailsHtml += `
+                    <li>
+                        ${description} - Qty: ${quantity} - Total: ${totalPrice}
+                    </li>
+                `;
+                subtotal += price * parseInt(quantity);
+            });
+
+            orderDetailsHtml += "</ul>";
+            checkoutDetails.innerHTML = orderDetailsHtml;
+            checkoutTotal.textContent = `₱${subtotal.toFixed(2)}`;
+            checkoutModal.style.display = "flex";  // Change to flex for proper alignment
+        });
+
+        // Close Checkout Modal
+        cancelCheckoutButton.addEventListener("click", () => {
+            checkoutModal.style.display = "none";
+        });
+
+        // Place Order
+        placeOrderButton.addEventListener("click", () => {
+            checkoutModal.style.display = "none";
+            confirmationModal.style.display = "flex";  // Show confirmation modal
+        });
+
+        // Close Confirmation Modal
+        closeConfirmationButton.addEventListener("click", () => {
+            confirmationModal.style.display = "none";
+        });
+
+        // Fetch Cart Items from Backend
+      
+        const urlParams = new URLSearchParams(window.location.search);
+        const accountID = urlParams.get('accountID');
+
+        if (!accountID) {
+            alert("You need to log in to view your cart.");
+            window.location.href = 'frontpage.html';
+        }
+
+        // Fetch Cart Items from Backend
+        fetch(`http://localhost:8000/fetchCart.php?accountID=${accountID}`)
+    .then(response => response.json())
+    .then(data => {
+        console.log('Fetched Data:', data); // Debug response
+        if (data.success && data.items && data.items.length > 0) {
+            // If items are successfully fetched and not empty
+            renderCartItems(data.items);
+        } else {
+            // If no items are present or API fails
+            renderEmptyCart();
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching cart items:', error);
+        renderEmptyCart();
+    });
+
+    function renderCartItems(items) {
+    cartBody.innerHTML = ""; // Clear existing rows
+    let subtotal = 0;
+    let totalItems = 0;
+
+    // Check if items are empty
+    if (!items || items.length === 0) {
+        cartBody.innerHTML = `
+            <tr>
+                <td colspan="6" style="text-align:center; font-weight:bold; padding:20px;">
+                    No data found
+                </td>
+            </tr>
+        `;
+        subtotalElement.textContent = "₱0.00";
+        totalItemsElement.textContent = "0";
+        return;
+    }
+
+    // Loop through cart items and render rows
+    items.forEach(item => {
+        const price = parseFloat(item.price);
+        const totalPrice = price * parseInt(item.quantity); 
+
+        subtotal += totalPrice;
+        totalItems += parseInt(item.quantity);
+
+        const row = `
+            <tr id="item-${item.cartID}">
+                <td><img src="https://via.placeholder.com/60" alt="Product"></td>
+                <td class="description">${item.description}</td>
+                <td class="price">₱${price.toFixed(2)}</td>
+                <td class="quantity">
+                    <div class="quantity-controls">
+                        <button class="quantity-decrease">-</button>
+                        <input type="number" value="${item.quantity}" min="1" class="quantity-input">
+                        <button class="quantity-increase">+</button>
+                    </div>
+                </td>
+                <td class="total-price">₱${totalPrice.toFixed(2)}</td>
+                <td class="delete-icon" onclick="deleteItem('${item.cartID}')">🗑️</td>
+            </tr>
+        `;
+        cartBody.insertAdjacentHTML("beforeend", row);
+    });
+
+    // Update summary
+    subtotalElement.textContent = `₱${subtotal.toFixed(2)}`;
+    totalItemsElement.textContent = totalItems;
+}
+
+
+
+
+     // Function to Update Cart Item in the Database
+function updateCartItem(description, quantity) {
+    // If quantity is 0, call deleteItem function
+    if (quantity === 0) {
+        deleteItem(description);  // Delete item when quantity is 0
+        return;
+    }
+
+    // Otherwise, proceed with updating the cart item
+    fetch("http://localhost:8000/update_cart.php", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            accountID: accountID,
+            description: description,
+            quantity: quantity,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log("Cart item updated successfully");
+        } else {
+            console.error("Failed to update cart item:", data.message);
+        }
+    })
+    .catch(error => console.error("Error updating cart item:", error));
+}
+
+function deleteItem(cartID) {
+    console.log("Deleting cartID:", cartID); // Debug to ensure cartID is valid
+    if (!cartID) {
+        alert("Invalid cartID for deletion.");
+        return;
+    }
+
+    fetch(`http://localhost:8000/deleteCartItem.php?cartID=${cartID}&accountID=${accountID}`, {
+        method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log("Item deleted successfully");
+            const row = document.getElementById(`item-${cartID}`);
+            if (row) row.remove();
+            updateCartSummary();
+        } else {
+            console.error("Error:", data.message);
+            alert("Failed to delete the item.");
+        }
+    })
+    .catch(error => {
+        console.error('Request failed:', error);
+        alert("An error occurred while trying to delete the item.");
+    });
+}
+
+
+// Event Listener for Quantity Change
+cartBody.addEventListener("click", (event) => {
+    const row = event.target.closest("tr");
+    const description = row.querySelector(".description").textContent;
+    const quantityInput = row.querySelector(".quantity-input");
+    let quantity = parseInt(quantityInput.value);
+    const price = parseFloat(row.querySelector(".price").textContent.replace('₱', ''));
+    const totalPriceElement = row.querySelector(".total-price");
+
+    if (event.target.classList.contains("quantity-decrease") && quantity > 1) {
+        quantityInput.value = quantity - 1;
+    } else if (event.target.classList.contains("quantity-increase")) {
+        quantityInput.value = quantity + 1;
+    }
+
+    // Check if quantity is 0 and delete item
+    quantity = parseInt(quantityInput.value);
+    if (quantity === 0) {
+        deleteItem(row.id.split('-')[1]); // Use cartID to delete item
+    } else {
+        totalPriceElement.textContent = `₱${(price * quantity).toFixed(2)}`;
+        updateCartItem(description, quantity);  // This is for updating the quantity if not deleted
+    }
+
+    updateCartSummary();
+});
+
+
+        // Function to Update Cart Summary
+        function updateCartSummary() {
+            let subtotal = 0;
+            let totalItems = 0;
+
+            const rows = cartBody.querySelectorAll("tr");
+            rows.forEach(row => {
+                const price = parseFloat(row.querySelector(".price").textContent.replace('₱', ''));
+                const quantity = parseInt(row.querySelector(".quantity-input").value);
+                subtotal += price * quantity;
+                totalItems += quantity;
+            });
+
+            subtotalElement.textContent = `₱${subtotal.toFixed(2)}`;
+            totalItemsElement.textContent = totalItems;
+        }
+
+       // Place Order Logic
+placeOrderButton.addEventListener("click", () => {
+    checkoutModal.style.display = "none";
+    confirmationModal.style.display = "flex";  // Show confirmation modal
+
+    // Gather order details
+    const orderItems = [];
+    let subtotal = 0;
+
+    cartBody.querySelectorAll("tr").forEach(row => {
+        const description = row.querySelector(".description").textContent;
+        const quantity = row.querySelector(".quantity-input").value;
+        const price = parseFloat(row.querySelector(".price").textContent.replace('₱', ''));
+        const totalPrice = row.querySelector(".total-price").textContent.replace('₱', '');
+
+        orderItems.push({
+            description: description,
+            price: price,
+            quantity: quantity,
+            totalPrice: totalPrice,
+        });
+
+        subtotal += price * parseInt(quantity);
+    });
+
+    // Send the order details to the backend for saving to the database
+    fetch("http://localhost:8000/placeOrder.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            accountID: accountID,        // User account ID
+            items: orderItems,           // Array of order items
+            subtotal: subtotal.toFixed(2), // Subtotal of the order
+            status: "Processing"         // Status set to "Processing"
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log("Order placed successfully");
+            confirmationModal.style.display = "none";  // Hide confirmation modal
+            location.reload();  // Reload the page after successful order placement
+        } else {
+            console.error("Failed to place order:", data.message);
+            alert("Failed to place the order.");
+        }
+    })
+    .catch(error => {
+        console.error("Error placing order:", error);
+        alert("An error occurred while placing the order.");
+    });
+});
+
+
+        // Load Header and Footer
+        fetch('header.html').then(response => response.text()).then(data => {
+            document.getElementById('header-placeholder').innerHTML = data;
+        });
+
+        fetch('footer.html').then(response => response.text()).then(data => {
+            document.getElementById('footer-placeholder').innerHTML = data;
+        });
+    </script>
+</body>
+</html>

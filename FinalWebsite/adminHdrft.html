@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title> <!-- Added title -->
+  <link rel="stylesheet" href="adminHdrft.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<header class="header-title">
+  <div class="logo-container-fp">
+    <img src="src/petshoplogo.png" alt="Pet Shop Logo" class="logo">
+    <div class="divider-line-fp"></div>
+    <h3 class="logo-text">The Furry Home in a Store</h3>
+  </div>
+  <div class="admin">
+    <!-- Fixed button with title and accessible text -->
+    <button id="userButton" title="Login" onclick="window.location.href='login.html'">
+      <i class="fa fa-user icon-user" aria-hidden="true"></i>
+      <span class="sr-only">Login</span> <!-- Screen reader only text -->
+    </button>
+    <div class="greetings">
+      <h4>Hello,</h4> <h4>Admin</h4>
+    </div>
+  </div>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div>
+      <h2>ADMIN</h2>
+      <ul class="menu">
+        <li><a href="adminDash.html"><i class="fas fa-th-large"></i> DASHBOARD</a></li>
+        <li><a href="adminProduct.html"><i class="fas fa-shopping-cart"></i> PRODUCT</a></li>
+        <li><a href="adminSales.html"><i class="fas fa-envelope"></i> SALES</a></li>
+        <li><a href="adminUserManage.html"><i class="fas fa-user"></i> USER</a></li>
+      </ul>
+    </div>
+    <div class="logout">
+      <a href="logout.html"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+    </div>
+  </div>
+</header>
+</body>
+</html>

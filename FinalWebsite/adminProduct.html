@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="adminProduct.css">
+  <title>Product Dashboard</title>
+</head>
+<body>
+  <!-- Sidebar and Header Placeholder -->
+  <div id="adminHdrft-placeholder"></div>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>PRODUCT INVENTORY TABLE</h1>
+  </div>
+
+  <!-- Tabs for navigation -->
+  <div class="tab">
+    <div class="tab" onclick="window.location.href='adminOrder.html'">ORDER</div>
+    <div class="tab active" onclick="window.location.href='adminProduct.html'">PRODUCTS</div>
+  </div>
+
+  <div class="container">
+    <!-- Search and Add Product -->
+    <div class="search-filter">
+      <input type="search" placeholder="Search">
+      <button id="addButton" onclick="window.location.href='adminAddProduct.html'">+ ADD PRODUCT</button>
+    </div>
+
+    <!-- Table to display products -->
+    <table>
+      <thead>
+        <tr>
+          <th>THUMBNAIL</th>
+          <th>PRODUCT ID</th>
+          <th>CATEGORIES</th>
+          <th>SUB-CATEGORIES</th>
+          <th>NAME</th>
+          <th>DESCRIPTION</th>
+          <th>PRICE</th>
+          <th>STOCK</th>
+          <th>STATUS</th>
+          <th>ACTION</th>
+        </tr>
+      </thead>
+      <tbody id="productTableBody">
+        <!-- Product rows will be dynamically populated -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Dynamically load headerSidebar.html into the placeholder
+    fetch('adminHdrft.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('adminHdrft-placeholder').innerHTML = data;
+      })
+      .catch(error => console.error('Error loading header and sidebar:', error));
+
+    // Fetch and display product data
+    fetch('http://localhost:8000/fetchProduct.php')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          console.log("Products fetched successfully:", data.products);
+          const productTableBody = document.getElementById('productTableBody');
+          
+          data.products.forEach(product => {
+            const row = document.createElement('tr');
+
+            // Debugging: Check if the product has a thumbnail
+            if (product.thumbnail) {
+              console.log("Thumbnail found for product ID:", product.productID);
+            } else {
+              console.log("No thumbnail for product ID:", product.productID);
+            }
+
+            // Sanitize and format Base64 string by removing spaces and line breaks
+            const sanitizedBase64 = product.thumbnail.replace(/\s/g, '').replace(/\n/g, '').replace(/\r/g, '').trim();
+
+            // Define MIME type for the image (assume JPEG for now)
+            const mimeType = "image/jpeg";  // Change to "image/png" if needed
+            const imgSrc = `data:${mimeType};base64,${sanitizedBase64}`;
+
+            // Create and load image
+            const thumbnailCell = document.createElement('td');
+            const thumbnailImg = document.createElement('img');
+            thumbnailImg.src = imgSrc;
+            thumbnailImg.alt = product.name;
+            thumbnailImg.style.width = '50px';
+            thumbnailImg.style.height = '50px';
+
+            // Error handling for image loading
+            thumbnailImg.onerror = () => {
+              console.error(`Error loading image for product ID: ${product.productID}`);
+              thumbnailImg.src = 'https://via.placeholder.com/50'; // Use a fallback placeholder
+            };
+
+            thumbnailCell.appendChild(thumbnailImg);
+            row.appendChild(thumbnailCell);
+
+            // Add other product data to the row
+            row.innerHTML += `
+              <td>${product.productID}</td>
+              <td>${product.categories}</td>
+              <td>${product.sub_categories}</td>
+              <td>${product.name}</td>
+              <td>${product.description}</td>
+              <td>${product.price}</td>
+              <td>${product.stock}</td>
+              <td>${product.status}</td>
+              <button class="view-btn" onclick="window.location.href='adminAddProductEdit.html?productID=${product.productID}'">EDIT</button>
+            `;
+
+            // Append the row to the table
+            productTableBody.appendChild(row);
+          });
+        } else {
+          console.error('Error fetching products:', data.message); // Error if no products were fetched
+        }
+      })
+      .catch(error => console.error('Error fetching product data:', error));  // General error handler
+  </script>
+</body>
+</html>

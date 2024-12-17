@@ -1,0 +1,200 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f9f8f3;
+  }
+  /* Header and Sidebar Placeholder */
+#adminHdrft-placeholder {
+    width: 100%;
+    height: 70px;
+    background-color: #ddd;
+    margin-bottom: 20px;
+}
+  
+  .header {
+    display: flex;
+    align-items: center;
+    background-color:#c6dbb2;
+    padding: 10px;
+    font-weight: bold;
+    width: 80%;
+    margin-left: 16rem;
+  }
+  .header h1{
+    display: flex;
+    align-items: center;
+margin-left: 370px;
+  }
+  
+   .tab {
+    margin-right: 1px;
+    font-size: 15x;
+    color: #6d4c41;
+    background-color: #c6dbb2;
+    display: flex;
+    align-items: center;
+    background-color:#c6dbb2;
+    padding: 10px;
+    font-weight: bold;
+    width: 80%;
+    margin-left: 16rem;
+    cursor: pointer; /* Cursor pointer for better UX */
+  transition: all 0.3s ease; /* Smooth transition for size and hover effects */
+  border: 2px solid transparent;
+
+  }
+
+  
+  /* Active Tab */
+  .tab.active {
+    color: #000;
+    border-bottom: 3px solid #6d4c41;
+    width: 100px;
+    transform: scale(1.1); /* Increases size when active */
+  }
+  
+  .search-filter {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    width: 80%;
+    margin-left: 16rem;
+    margin-top: 2rem;
+  }
+  
+  input[type="search"] {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-style: italic;
+    width: 60%;
+  }
+  
+  button {
+    background-color:#c6dbb2;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #6d8d5a;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    margin-top: 10px;
+    width: 80%;
+    margin-left: 16rem;
+  }
+  
+  th, td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    font-size: 14px;
+  }
+  
+  th {
+    background-color: #d0e4c1;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  td {
+    font-size: 13px;
+  }
+  
+  td img {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .in-stock {
+    background-color: #d5edc0;
+    color: #3b7a2f;
+  }
+  
+  .low-stock {
+    background-color: #f4e4c6;
+    color: #8a6c3a;
+  }
+  
+  .out-stock {
+    background-color: #f4b7b4;
+    color: #8f2e2d;
+  }
+  
+  a {
+    color: #6d4c41;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+
+  .view-btn {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.view-btn:hover {
+    background-color: #45a049; /* Slightly darker green */
+}
+
+  
+  /* Additional styling for responsive design */
+  @media (max-width: 768px) {
+    .search-filter {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    input[type="search"] {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    button {
+      width: 100%;
+    }
+  
+    table th, table td {
+      padding: 10px;
+      font-size: 12px;
+    }
+  
+    td img {
+      height: 40px;
+      width: 40px;
+    }
+  }
+  

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Furry Home - Pet Shop</title>
+  <link rel="stylesheet" href="main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<header class="header-title">
+  <div class="logo-container-fp">
+    <img src="src/petshoplogo.png" alt="Pet Shop Logo" class="logo">
+    <div class="divider-line-fp"></div>
+    <h3 class="logo-text">The Furry Home in a Store</h3>
+  </div>
+  <nav class="navbar">
+    <!-- Navbar links, accountID will be appended dynamically -->
+    <a href="frontpage.html#showcase">Home</a>
+    <a href="frontpage.html#product-showcase">Explore</a>
+    <a href="frontpage.html#about-us">About</a>
+    <a href="frontpage.html#footer">Contact</a>
+  </nav>
+  <div class="cart-user">
+    <button id="cartButton" title="View Cart" onclick="redirectToCart()">
+      <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+      <span class="sr-only">Cart</span>
+    </button>
+    <button id="userButton" title="Login or Profile" onclick="window.location.href='login.html'">
+      <i class="fa fa-user icon-user" aria-hidden="true"></i>
+      <span class="sr-only">User Profile</span>
+    </button>
+    <div class="greetings"></div>
+  </div>
+</header>
+
+<script>
+  // Retrieve accountID from the current URL or session/cookie
+  const urlParams = new URLSearchParams(window.location.search);
+  let accountID = urlParams.get('accountID');
+
+  // If accountID is not found in the URL, check sessionStorage or localStorage
+  if (!accountID) {
+    accountID = sessionStorage.getItem('accountID');  // Retrieve from sessionStorage if set earlier
+    if (!accountID) {
+      accountID = localStorage.getItem('accountID');  // Fallback to localStorage if not in sessionStorage
+    }
+  }
+
+  // Log the accountID to check what's being passed
+  console.log('Account ID:', accountID);
+
+  // If accountID is found, update the navbar links dynamically
+  if (accountID) {
+    document.querySelectorAll('.navbar a').forEach(link => {
+      // Get the href and append the accountID to it
+      const href = link.getAttribute('href');
+      link.setAttribute('href', `${href.split('?')[0]}?accountID=${accountID}${href.split('#')[1] ? `#${href.split('#')[1]}` : ''}`);
+    });
+  }
+
+  // Function to redirect cart with accountID if available
+  function redirectToCart() {
+    const cartURL = accountID ? `cart.html?accountID=${accountID}` : 'cart.html';
+    window.location.href = cartURL;
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+/* General styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    padding-top: 100px; /* Matches the height of the fixed header */
+    padding-bottom: 280px; /* Matches the height of the footer */
+    box-sizing: border-box;
+}
+
+/* Main Container */
+.container {
+    display: flex;
+    justify-content: center;
+    margin: 30px;
+    gap: 20px;
+}
+
+
+        .product-image {
+            max-width: 430px;
+        }
+
+        .product-image img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Product Details */
+        .product-details {
+            max-width: 400px;
+            color: #333;
+        }
+
+        .product-details h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            color: red;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .stock {
+            margin: 10px 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .quantity input {
+            width: 40px;
+            text-align: center;
+            margin: 0 10px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .buttons button {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-to-cart {
+            background-color: #87c487;
+            color: white;
+        }
+
+        .buy-now {
+            background-color: #aaa;
+            color: white;
+        }
+
+        .description {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Recommended Products */
+        .recommended {
+            margin: 50px auto;
+            width: 90%;
+            text-align: center;
+        }
+
+        .recommended h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .recommended-products {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .recommended-item {
+            max-width: 200px;
+            text-align: center;
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .recommended-item img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .recommended-item p {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .recommended-item .price {
+            color: red;
+            font-weight: bold;
+        }
